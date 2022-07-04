@@ -1,6 +1,6 @@
-import { atom } from 'recoil';
+import { atom } from "recoil"
 
 export default atom({
-  key: 'statusesState',
-  default: ['todo', 'done'],
-});
+    key: "statusesState",
+    default: ["todo", "done"],
+})

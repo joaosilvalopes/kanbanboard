@@ -1,10 +1,10 @@
-import React, { FC, SetStateAction, useState } from "react"
+import React, { FC, useState } from "react"
 import { useRecoilState } from "recoil"
-import statusesState from "../state/statusesState"
+import statusesState from "@state/statusesState"
 
 const AddStatus: FC = () => {
     const [adding, setAdding] = useState(false)
-    const [statuses, setStatuses] = useRecoilState(statusesState)
+    const [_, setStatuses] = useRecoilState(statusesState)
     const [status, setStatus] = useState("")
 
     const changeStatus = (e: React.ChangeEvent<HTMLInputElement>) =>
