@@ -6,9 +6,9 @@ const statusesState = atom({
 })
 
 export const useAddStatus = () => {
-    const setStatuses = useSetRecoilState(statusesState);
+    const setStatuses = useSetRecoilState(statusesState)
 
-    return (status: string) => setStatuses((prev) => [...prev, status]);
-};
+    return (status: string) => setStatuses((prev) => [...prev, status])
+}
 
-export const useStatuses = () => useRecoilValue(statusesState);
+export const useStatuses = () => useRecoilValue(statusesState)
