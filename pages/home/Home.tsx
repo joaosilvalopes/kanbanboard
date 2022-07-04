@@ -1,10 +1,9 @@
 import type { NextPage } from "next"
 import Head from "next/head"
 import Image from "next/image"
-import { useRecoilState } from "recoil"
 import styled from "styled-components"
 
-import statusesState from "@state/statusesState"
+import { useStatuses } from "store/statuses"
 import AddStatus from "@components/AddStatus"
 import Status from "@components/Status"
 
@@ -13,7 +12,7 @@ const Main = styled.main`
 `
 
 const Home: NextPage = () => {
-    const [statuses] = useRecoilState(statusesState)
+    const statuses = useStatuses()
 
     return (
         <Main>
