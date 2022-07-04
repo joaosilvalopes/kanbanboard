@@ -1,5 +1,7 @@
 import type { AppProps } from "next/app"
 import { createGlobalStyle } from "styled-components"
+import { RecoilRoot } from "recoil"
+import { FC } from "react"
 
 const GlobalCSS = createGlobalStyle`
     html,
@@ -20,12 +22,12 @@ const GlobalCSS = createGlobalStyle`
     }
 `
 
-function MyApp({ Component, pageProps }: AppProps) {
+const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
     return (
-        <>
+        <RecoilRoot>
             <GlobalCSS />
             <Component {...pageProps} />
-        </>
+        </RecoilRoot>
     )
 }
 
