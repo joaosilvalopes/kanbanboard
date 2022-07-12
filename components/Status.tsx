@@ -2,7 +2,7 @@ import { FC } from "react"
 import styled from "styled-components"
 
 import AddCard from "@components/AddCard"
-import { useCards } from "@store/cards"
+import { useCardsQueryResult } from "@store/cardsQuery"
 
 const Wrapper = styled.div`
     display: flex;
@@ -16,7 +16,7 @@ const Name = styled.div``
 type Props = { name: string }
 
 const Status: FC<Props> = ({ name }) => {
-    const cards = useCards(name)
+    const cards = useCardsQueryResult(name)
 
     return (
         <Wrapper>

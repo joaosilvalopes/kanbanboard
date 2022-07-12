@@ -40,4 +40,4 @@ export const useAddCard = (status: string) => {
 }
 
 export const useCards = (status: string) =>
-    useRecoilValue(cardsState).value[status] || []
+    (useRecoilValue(cardsState).value[status] || [])

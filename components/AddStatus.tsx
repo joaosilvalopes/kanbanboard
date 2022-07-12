@@ -8,7 +8,7 @@ const AddStatus: FC = () => {
     const addStatus = useAddStatus()
 
     const changeStatus = (e: React.ChangeEvent<HTMLInputElement>) =>
-        setStatus(e.target.value)
+        setStatus(e.currentTarget.value)
 
     const add = () => {
         addStatus(status)

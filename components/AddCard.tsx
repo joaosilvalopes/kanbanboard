@@ -12,7 +12,7 @@ const AddCard: FC<Props> = ({ status }) => {
     const addCard = useAddCard(status)
 
     const changeCard = (e: React.ChangeEvent<HTMLInputElement>) =>
-        setCard(e.target.value)
+        setCard(e.currentTarget.value)
 
     const _addCard = () => {
         addCard(card)
