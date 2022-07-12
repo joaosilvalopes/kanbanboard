@@ -2,6 +2,7 @@ import { FC } from "react"
 import styled from "styled-components"
 
 import AddCard from "@components/AddCard"
+import Card from "@components/Card"
 import { useCardsQueryResult } from "@store/cardsQuery"
 
 const Wrapper = styled.div`
@@ -22,7 +23,7 @@ const Status: FC<Props> = ({ name }) => {
         <Wrapper>
             <Name>{name}</Name>
             {cards.map((card) => (
-                <div key={card}>{card}</div>
+                <Card key={card} name={card} status={name} />
             ))}
             <AddCard status={name} />
         </Wrapper>

@@ -22,10 +22,10 @@ const cardsState = atom({
     }))]
 })
 
-export const useAddCard = (status: string) => {
+export const useAddCard = () => {
     const setCards = useSetRecoilState(cardsState)
 
-    return (card: string) => setCards((prev) => {
+    return (status: string, card: string) => setCards((prev) => {
         const cards = prev.value[status] || [];
 
         if(card === "") {
@@ -41,3 +41,23 @@ export const useAddCard = (status: string) => {
 
 export const useCards = (status: string) =>
     (useRecoilValue(cardsState).value[status] || [])
+
+export const useEditCard = () => {
+    const setCards = useSetRecoilState(cardsState)
+
+    return (status: string, oldCard: string, newCard: string) => setCards((prev) => {
+        const cards = prev.value[status] || [];
+
+        if(newCard === "") {
+            return { error: 'Invalid Card: Empty Value', value: prev.value  }
+        }
+        if(cards.filter((card) => card === oldCard).includes(newCard)) {
+            return { error: 'Invalid Card: Repeated Value', value: prev.value  }
+        }
+
+        return {
+            error: undefined,
+            value: {  ...prev.value, [status]: cards.map((card) => card === oldCard ? newCard : card) }
+        }
+    });
+}
