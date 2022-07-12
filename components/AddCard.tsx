@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react"
+import React, { createRef, FC, useState } from "react"
 import { useAddCard } from "@store/cards"
 
 type Props = {
@@ -7,29 +7,27 @@ type Props = {
 
 const AddCard: FC<Props> = ({ status }) => {
     const [adding, setAdding] = useState(false)
-    const [card, setCard] = useState("")
+    const inputRef = createRef<HTMLInputElement>()
+    const addCard = useAddCard()
 
-    const addCard = useAddCard(status)
+    const closeForm = () => setAdding(false)
+    const openForm = () => setAdding(true)
 
-    const changeCard = (e: React.ChangeEvent<HTMLInputElement>) =>
-        setCard(e.currentTarget.value)
+    const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
 
-    const _addCard = () => {
-        addCard(card)
-        setAdding(false)
-        setCard("")
+        addCard(status, inputRef.current?.value || "")
+        closeForm()
     }
 
-    const toggleAdding = () => setAdding((prevAdding) => !prevAdding)
-
     return adding ? (
-        <>
-            <input type="text" value={card} onChange={changeCard}></input>
-            <button onClick={_addCard}>Add</button>
-            <button onClick={toggleAdding}>X</button>
-        </>
+        <form onSubmit={handleFormSubmit}>
+            <input type="text" ref={inputRef}></input>
+            <button type="submit">Add</button>
+            <button onClick={closeForm}>X</button>
+        </form>
     ) : (
-        <button onClick={toggleAdding}>+ Add card</button>
+        <button onClick={openForm}>+ Add card</button>
     )
 }
 
