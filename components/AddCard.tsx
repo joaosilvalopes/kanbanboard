@@ -1,4 +1,5 @@
-import React, { createRef, FC, useState } from "react"
+import React, { FC, FormEvent, useState } from "react"
+
 import { useAddCard } from "@store/cards"
 
 type Props = {
@@ -7,23 +8,25 @@ type Props = {
 
 const AddCard: FC<Props> = ({ status }) => {
     const [adding, setAdding] = useState(false)
-    const inputRef = createRef<HTMLInputElement>()
+
     const addCard = useAddCard()
 
-    const closeForm = () => setAdding(false)
     const openForm = () => setAdding(true)
+    const closeForm = () => setAdding(false)
 
-    const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        addCard(status, inputRef.current?.value || "")
+        const card = new FormData(e.currentTarget).get("card") as string
+
+        addCard(status, card)
         closeForm()
     }
 
     return adding ? (
         <form onSubmit={handleFormSubmit}>
-            <input type="text" ref={inputRef}></input>
-            <button type="submit">Add</button>
+            <input type="text" name="card"></input>
+            <button type="submit">Add Card</button>
             <button onClick={closeForm}>X</button>
         </form>
     ) : (

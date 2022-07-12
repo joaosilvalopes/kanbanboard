@@ -22,6 +22,9 @@ const cardsState = atom({
     }))]
 })
 
+export const useCards = (status: string) =>
+    (useRecoilValue(cardsState).value[status] || [])
+
 export const useAddCard = () => {
     const setCards = useSetRecoilState(cardsState)
 
@@ -38,9 +41,6 @@ export const useAddCard = () => {
         return { error: undefined, value: { ...prev.value, [status]: [...cards, card] }};
     });
 }
-
-export const useCards = (status: string) =>
-    (useRecoilValue(cardsState).value[status] || [])
 
 export const useEditCard = () => {
     const setCards = useSetRecoilState(cardsState)

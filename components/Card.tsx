@@ -1,38 +1,38 @@
+import React, { FC, FormEvent, useState } from "react"
+
 import { useEditCard } from "@store/cards"
-import React, { createRef, FC, useState } from "react"
 
 type Props = {
-    name: string
+    card: string
     status: string
 }
 
-const Card: FC<Props> = ({ name, status }) => {
+const Card: FC<Props> = ({ card, status }) => {
     const [editing, setEditing] = useState(false)
-    const inputRef = createRef<HTMLInputElement>()
     const editCard = useEditCard()
 
     const openForm = () => setEditing(true)
     const closeForm = () => setEditing(false)
 
-    const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        const newName = inputRef.current?.value || ""
+        const newCard = new FormData(e.currentTarget).get("newCard") as string
 
-        editCard(status, name, newName)
+        editCard(status, card, newCard)
 
         closeForm()
     }
 
     return editing ? (
         <form onSubmit={handleFormSubmit}>
-            <input type="text" ref={inputRef} defaultValue={name}></input>
+            <input type="text" name="newCard" defaultValue={card}></input>
             <button type="submit">save</button>
             <button onClick={closeForm}>X</button>
         </form>
     ) : (
         <div>
-            {name}
+            {card}
             <button onClick={openForm}>edit</button>
         </div>
     )

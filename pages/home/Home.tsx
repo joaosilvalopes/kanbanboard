@@ -2,12 +2,13 @@ import type { NextPage } from "next"
 import Head from "next/head"
 import Image from "next/image"
 import styled from "styled-components"
-import React, { FormEvent, useState, createRef } from "react"
+import React, { FormEvent } from "react"
+
+import AddStatus from "@components/AddStatus"
+import Status from "@components/Status"
 
 import { useStatuses } from "store/statuses"
 import { useSetCardsQuery } from "@store/cardsQuery"
-import AddStatus from "@components/AddStatus"
-import Status from "@components/Status"
 
 const Main = styled.main`
     display: flex;
@@ -29,25 +30,24 @@ const Board = styled.div`
 const Home: NextPage = () => {
     const setCardsQuery = useSetCardsQuery()
     const statuses = useStatuses()
-    const searchInputRef = createRef<HTMLInputElement>()
 
     const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        setCardsQuery(searchInputRef.current?.value || "")
+        setCardsQuery(new FormData(e.currentTarget).get("cardsQuery") as string)
     }
 
     return (
         <Main>
             <Nav>
                 <form onSubmit={handleFormSubmit}>
-                    <Input type="text" ref={searchInputRef} />
+                    <Input type="text" name="cardsQuery" />
                     <Button type="submit">search</Button>
                 </form>
             </Nav>
             <Board>
                 {statuses.map((status) => (
-                    <Status key={status} name={status} />
+                    <Status key={status} status={status} />
                 ))}
                 <AddStatus />
             </Board>

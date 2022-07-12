@@ -1,31 +1,32 @@
-import React, { FC, useState } from "react"
+import React, { FC, FormEvent, useState } from "react"
+
 import { useAddStatus } from "@store/statuses"
 
 const AddStatus: FC = () => {
     const [adding, setAdding] = useState(false)
-    const [status, setStatus] = useState("")
 
     const addStatus = useAddStatus()
 
-    const changeStatus = (e: React.ChangeEvent<HTMLInputElement>) =>
-        setStatus(e.currentTarget.value)
+    const openForm = () => setAdding(true)
+    const closeForm = () => setAdding(false)
 
-    const add = () => {
+    const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+
+        const status = new FormData(e.currentTarget).get("status") as string
+
         addStatus(status)
-        setAdding(false)
-        setStatus("")
+        closeForm()
     }
 
-    const toggleAdding = () => setAdding((prevAdding) => !prevAdding)
-
     return adding ? (
-        <>
-            <input type="text" value={status} onChange={changeStatus}></input>
-            <button onClick={add}>Add Status</button>
-            <button onClick={toggleAdding}>X</button>
-        </>
+        <form onSubmit={handleFormSubmit}>
+            <input type="text" name="status"></input>
+            <button type="submit">Add Status</button>
+            <button onClick={closeForm}>X</button>
+        </form>
     ) : (
-        <button onClick={toggleAdding}>+ Add status</button>
+        <button onClick={openForm}>+ Add status</button>
     )
 }
 
